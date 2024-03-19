@@ -26,6 +26,7 @@ export default function App() {
   const [id, setId] = useState<string>("");
   const [light, setLight] = useState<number>(0);
   const [filePath, setFilePath] = useState<string>("");
+  const [lastTap, setLastTap] = useState<Date | null>(null);
 
   const isWriting = useRef<boolean>(false);
   const rowQueue = useRef<string[]>([]);
@@ -96,6 +97,7 @@ export default function App() {
   const handleTap = async (e: GestureResponderEvent) => {
     const { locationX, locationY } = e.nativeEvent;
     setTaps((prev) => [...prev, { x: locationX, y: locationY }]);
+    setLastTap(new Date());
 
     const version = Application.nativeApplicationVersion;
     const buildNumber = Application.nativeBuildVersion;
@@ -148,8 +150,13 @@ export default function App() {
         style={styles.container}
       >
         <Text onPress={handleTap} style={styles.id}>
-          {id}
+          {`ID: ${id}`}
         </Text>
+        {lastTap && (
+          <Text onPress={handleTap} style={[styles.id, styles.lastTap]}>
+            {`Last Tap: ${lastTap.toLocaleString()}`}
+          </Text>
+        )}
         {taps.map((tap, i) => (
           <View
             key={i}
@@ -160,6 +167,7 @@ export default function App() {
                 left: tap.x - 5, // make sure its centered on the tap
                 top: tap.y - 5,
               },
+              i === taps.length - 1 ? styles.red : {},
             ]}
           />
         ))}
@@ -177,8 +185,11 @@ const styles = StyleSheet.create({
     width: 10,
     height: 10,
     borderRadius: 5,
-    backgroundColor: "red",
+    backgroundColor: "black",
     opacity: 0.7,
+  },
+  red: {
+    backgroundColor: "red",
   },
   id: {
     position: "absolute",
@@ -186,5 +197,9 @@ const styles = StyleSheet.create({
     right: 10,
     fontSize: 12,
     opacity: 0.6,
+  },
+  lastTap: {
+    left: 10,
+    right: undefined,
   },
 });
