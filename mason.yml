@@ -37,4 +37,4 @@ os:
   apps:
     - name: com.biosensics.taprecorder
       package_name: com.biosensics.taprecorder
-      version_code: 6
+      version_code: 7
