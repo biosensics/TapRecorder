@@ -14,6 +14,5 @@ runs:
       shell: bash
       run: |
         set -e
-        cd app
         yarn
         cd ..
