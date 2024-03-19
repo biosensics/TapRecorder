@@ -1,0 +1,54 @@
+name: "Build APK"
+
+on:
+  workflow_dispatch:
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    outputs:
+      version_code: ${{ steps.setup-release.outputs.version_code }}
+      tag_name: ${{ steps.setup-release.outputs.release_version }}
+    steps:
+      - name: GitHub Slug
+        id: github-slug
+        uses: rlespinasse/github-slug-action@v4
+
+      - name: Setup Release
+        id: setup-release
+        shell: bash
+        run: |
+          echo "release_version=${{ github.ref_name }}-${GITHUB_SHA_SHORT}-${{ github.run_number }}" >> $GITHUB_OUTPUT
+          echo "version_code=${{ github.run_number }}" >> $GITHUB_OUTPUT
+
+      - name: Create Release
+        id: create_release
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.ROBOT_PERSONAL_ACCESS_TOKEN }}
+          target_commitish: ${{ github.sha }}
+          tag_name: ${{ steps.setup-release.outputs.release_version }}
+          draft: false
+          prerelease: true
+
+  build-and-release-android:
+    needs: create-release
+    name: Build and Release Android
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.ROBOT_PERSONAL_ACCESS_TOKEN }}
+      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      VERSION_CODE: ${{ needs.create-release.outputs.version_code }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        id: checkout
+        with:
+          ref: ${{ github.ref }}
+          token: ${{ secrets.ROBOT_PERSONAL_ACCESS_TOKEN }}
+
+      - name: Package Android Release
+        id: package-android
+        uses: ./.github/actions/build-and-release-android
+        with:
+          tag_name: ${{ needs.create-release.outputs.tag_name }}

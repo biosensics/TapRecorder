@@ -1,0 +1,19 @@
+name: "install-dependencies"
+description: "Install Dependencies and setup .npmrc"
+runs:
+  using: "composite"
+  steps:
+    - name: Use Node.js Version 18
+      id: setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 18
+
+    - name: Install Dependencies
+      id: install
+      shell: bash
+      run: |
+        set -e
+        cd app
+        yarn
+        cd ..

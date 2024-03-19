@@ -1,0 +1,11 @@
+name: "setup-eas"
+description: "Setup EAS"
+runs:
+  using: "composite"
+  steps:
+    - name: Setup EAS
+      id: setup-eas
+      uses: expo/expo-github-action@v8
+      with:
+        eas-version: latest
+        token: ${{ env.EXPO_TOKEN }}
