@@ -7,7 +7,7 @@ export default ({ config }) => {
     ...config,
     android: {
       ...config.android,
-      versionCode: process.env.VERSION_CODE,
+      versionCode: parseInt(process.env.VERSION_CODE),
     },
   };
 };
