@@ -29,13 +29,9 @@ runs:
       id: package
       run: |
         set -e
-
-        cd app
-        yarn prebuild
         eas build --local --platform=android --non-interactive --profile preview
-        cd ..
 
-        apk=$(ls ./app/*.apk | tail -1)
+        apk=$(ls ./*.apk | tail -1)
         echo "apk_asset_path=$apk" >> $GITHUB_OUTPUT
         echo "apk_asset_name=$(basename $apk)" >> $GITHUB_OUTPUT
 
