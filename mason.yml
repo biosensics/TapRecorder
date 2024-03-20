@@ -1,0 +1,40 @@
+os:
+  name: tap-recorder
+  version: latest
+  configurations:
+    android:
+      config_minimumScreenOffTimeout: 2147483647
+      config_cameraDoubleTapPowerGestureEnabled: false
+      config_enableLockScreenRotation: true
+      config_lowBatteryWarningLevel: 25
+      config_sendAudioBecomingNoisy: false
+      config_showNavigationBar: false
+      config_supportLongPressPowerWhenNonInteractive: true
+      config_safe_media_volume_enabled: false
+      config_lockSoundVolumeDb: -60
+      config_longPressOnPowerBehavior: 1
+      config_globalActionsList:
+        - power
+        - restart
+    mason-app-updater:
+      config_allow_download_over_metered: true
+    mason-fota:
+      config_allow_download_over_metered: true
+      config_show_download_in_downloads_ui: true
+      config_update_prompt_prior_to_install: false
+    mason-management:
+      default_runtime_permissions_grant_policy: autogrant
+      direct_boot_package: com.biosensics.taprecorder
+      disable_status_bar: true
+      disable_keyguard: true
+      enable_ime_with_hard_keyboard: true
+    settings:
+      config_default_tile_list:
+        - wifi
+    systemui:
+      config_quickSettingsTilesEditable: false
+      quick_settings_tiles_default: wifi,cell
+  apps:
+    - name: com.biosensics.taprecorder
+      package_name: com.biosensics.taprecorder
+      version_code: 7

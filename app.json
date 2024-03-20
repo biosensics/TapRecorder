@@ -1,0 +1,31 @@
+{
+  "expo": {
+    "name": "TapRecorder",
+    "slug": "taprecorder",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.biosensics.taprecorder"
+    },
+    "androidNavigationBar": {
+      "visible": "sticky-immersive"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "7c8754f1-49f7-4a90-8b75-8ac8c875a236"
+      }
+    }
+  }
+}
